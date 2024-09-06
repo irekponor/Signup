@@ -25,7 +25,7 @@
             <div class="form-group">
                 <input type="password" class="form-control" name="repeat_password" placeholder="Repeat Password">
             </div>
-            <div class="form-group">
+            <div class="form-btn">
                 <input type="submit" class="btn btn-primary" value="Register" name="submit">
             </div>
         </form>
