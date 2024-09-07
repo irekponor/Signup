@@ -21,11 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdo = null;
         $stmt = null;
 
+        header("Location: index.php");
 
         die();
     } catch (PDOException $e) {
         die("Query Failed:" . $e->getMessage());
     }
 } else {
-    echo "<div class='alert alert-success'>You have successfully registered!.</div>";
+    header("Location: index.php");
 }
