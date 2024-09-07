@@ -12,7 +12,7 @@
 
 <body>
     <div class="container">
-        <form action="" method="post">
+        <form action="registration.php" method="post">
             <div class="form-group">
                 <input type="text" class="form-control" name="fullname" placeholder="Full Name">
             </div>
@@ -23,7 +23,7 @@
                 <input type="password" class="form-control" name="pwd" placeholder="Password">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="repeat_password" placeholder="Repeat Password">
+                <input type="password" class="form-control" name="repeat_pwd" placeholder="Repeat Password">
             </div>
             <div class="form-btn">
                 <input type="submit" class="btn btn-primary" value="Register" name="submit">
