@@ -20,7 +20,7 @@
                 <input type="text" class="form-control" name="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password">
+                <input type="password" class="form-control" name="pwd" placeholder="Password">
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" name="repeat_password" placeholder="Repeat Password">
