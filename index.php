@@ -21,24 +21,21 @@
 
             $errors = false;
 
+
             if (empty($fullname) or empty($email) or empty($pwd) or empty($pwdRepeat)) {
                 echo "<div class='alert alert-danger'>All fields are required!.</div>";
                 $errors = true;
-            }
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 echo "<div class='alert alert-danger'>Enter a valid email.</div>";
                 $errors = true;
-            }
-            if (strlen($pwd) < 8) {
+            } elseif (strlen($pwd) < 8) {
                 echo "<div class='alert alert-danger'>Password must be at least 8 characters long.</div>";
                 $errors = true;
-            }
-            if ($pwd !== $pwdRepeat) {
-                echo "<div class='alert alert-danger'>Passwords dont match!.</div>";
+            } elseif ($pwd !== $pwdRepeat) {
+                echo "<div class='alert alert-danger'>Passwords don't match!.</div>";
                 $errors = true;
-            }
-            if (strlen($pwd) > 8) {
-                echo "<div class='alert alert-success'>You have successfully registered.</div>";
+            } else {
+                echo "<div class='alert alert-success'>Registration successful!</div>";
                 $errors = true;
             }
         }
