@@ -37,6 +37,7 @@
                 echo "<div class='alert alert-danger'>Passwords dont match!.</div>";
                 $errors = true;
             }
+            require_once "dbh-inc.php";
         }
         ?>
         <form action="index.php" method="post">
