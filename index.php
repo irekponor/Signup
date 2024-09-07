@@ -37,9 +37,13 @@
                 echo "<div class='alert alert-danger'>Passwords dont match!.</div>";
                 $errors = true;
             }
+            if (strlen($pwd) > 8) {
+                echo "<div class='alert alert-success'>You have successfully registered.</div>";
+                $errors = true;
+            }
         }
         ?>
-        <form action="insert.php" method="post">
+        <form action="index.php" method="post">
             <div class="form-group">
                 <input type="text" class="form-control" name="fullname" placeholder="Full Name">
             </div>
