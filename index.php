@@ -30,7 +30,7 @@
                 $errors = true;
             }
             if (strlen($pwd) < 8) {
-                echo "<div class='alert alert-danger'>Password must be at least 8 chars.</div>";
+                echo "<div class='alert alert-danger'>Password must be at least 8 characters long.</div>";
                 $errors = true;
             }
             if ($pwd !== $pwdRepeat) {
