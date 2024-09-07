@@ -1,13 +1,12 @@
 *{
     padding: 50px;
-    background: red;
 }
 
 .container {
     max-width: 600px;
     margin: 0 auto;
     padding: 0px;
-    box-shadow: beige;
+    box-shadow: rgb(70, 70, 62);
 }
 
 .form-group{
