@@ -20,12 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check password length
     if (strlen($pwd) < 8) {
-        die("<div class='alert alert-danger'>Password must be at least 8 characters long</div>");
+        die("<div class='alert alert-danger'>Password must be at least 8 characters long.</div>");
     }
 
     // Check if email is valid
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        die("Invalid email address.");
+        die("<div class='alert alert-danger'>Email is not valid.</div>");
     }
 
     // Check if email already exists
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(":email", $email);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            die("Email already exists. Please choose a different email.");
+            die("<div class='alert alert-danger'>Email already exists!.</div>");
         }
     } catch (PDOException $e) {
         die("Query Failed:" . $e->getMessage());
@@ -49,13 +49,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(":fullname", $fullname);
         $stmt->bindParam(":email", $email);
         $stmt->bindParam(":pwd", $pwd);
+
+
         $stmt->execute();
+
         $pdo = null;
         $stmt = null;
-        die("Registration successful!");
+
+        header("Location: index.php");
+
+        die("<div class='alert alert-success'>You have regsitered successfully!.</div>");
     } catch (PDOException $e) {
         die("Query Failed:" . $e->getMessage());
     }
+} else {
+    header("Location: index.php");
 }
 
 ?>
