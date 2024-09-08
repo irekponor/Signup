@@ -76,16 +76,16 @@
         ?>
         <form action="index.php" method="post">
             <div class="form-group">
-                <input type="text" class="form-control" name="fullname" placeholder="Full Name">
+                <input type="text" name="fullname" placeholder="Full Name">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="email" placeholder="Email">
+                <input type="text" name="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="pwd" placeholder="Password">
+                <input type="password" name="pwd" placeholder="Password">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="repeat_pwd" placeholder="Repeat Password">
+                <input type="password" name="repeat_pwd" placeholder="Repeat Password">
             </div>
             <div class="form-btn">
                 <input type="submit" class="btn btn-primary" value="Register" name="submit">
