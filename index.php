@@ -41,6 +41,15 @@
                 echo "<div class='alert alert-success'>Registration successful!</div>";
                 $errors = true;
             }
+            $sql = "SELECT * FROM users WHERE email = :email";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                echo "<div class='alert alert-danger'>Email already exists.</div>";
+                $errors = true;
+            }
         }
 
 
