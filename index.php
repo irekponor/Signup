@@ -12,6 +12,8 @@
 
 <body>
     <div class="container">
+
+
         <form action="index.php" method="post">
 
             <input type="text" name="fullname" placeholder="Full Name">

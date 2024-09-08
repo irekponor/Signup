@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Input validation
     if (empty($fullname) || empty($email) || empty($pwd) || empty($pwdRepeat)) {
-        die(".");
+        die("<div class='alert alert-danger'>All fields are required!.</div>");
     }
 
     // Check if passwords match
@@ -57,4 +57,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Query Failed:" . $e->getMessage());
     }
 }
+
 ?>
