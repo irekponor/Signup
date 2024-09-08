@@ -66,25 +66,30 @@
                 $pdo = null;
                 $stmt = null;
 
-                header("Location: index.php");
 
                 die();
             } catch (PDOException $e) {
                 die("Query Failed:" . $e->getMessage());
             }
         }
+
         ?>
         <form action="index.php" method="post">
 
             <input type="text" name="fullname" placeholder="Full Name">
 
+
             <input type="text" name="email" placeholder="Email">
+
 
             <input type="password" name="pwd" placeholder="Password">
 
+
             <input type="password" name="repeat_pwd" placeholder="Repeat Password">
 
-            <button class="btn btn-primary">Register</button>
+
+            <input type="submit" class="btn btn-primary" value="Register" name="submit">
+
         </form>
     </div>
     </form>
