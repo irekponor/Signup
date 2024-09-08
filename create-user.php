@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 <?php
+$error = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $_POST["fullname"];
@@ -10,22 +11,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Input validation
     if (empty($fullname) || empty($email) || empty($pwd) || empty($pwdRepeat)) {
-        die("<div class='alert alert-danger'>All fields are required!.</div>");
+        $error .= "<div class='alert alert-danger'>All fields are required!.</div>";
     }
 
     // Check if passwords match
     if ($pwd != $pwdRepeat) {
-        die("<div class='alert alert-danger'>Passwords do not match.</div>");
+        $error .= "<div class='alert alert-danger'>Passwords do not match.</div>";
     }
 
     // Check password length
     if (strlen($pwd) < 8) {
-        die("<div class='alert alert-danger'>Password must be at least 8 characters long.</div>");
+        $error .= "<div class='alert alert-danger'>Password must be at least 8 characters long.</div>";
     }
 
     // Check if email is valid
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        die("<div class='alert alert-danger'>Email is not valid.</div>");
+        $error .= "<div class='alert alert-danger'>Email is not valid.</div>";
     }
 
     // Check if email already exists
@@ -36,34 +37,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(":email", $email);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            die("<div class='alert alert-danger'>Email already exists!.</div>");
+            $error .= "Email already exists. Please choose a different email.<br>";
         }
     } catch (PDOException $e) {
-        die("Query Failed:" . $e->getMessage());
+        $error .= "Query Failed:" . $e->getMessage() . "<br>";
     }
 
     // Insert new user into database
-    try {
-        $query = "INSERT INTO users (fullname, email, pwd) VALUES (:fullname, :email, :pwd);";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":fullname", $fullname);
-        $stmt->bindParam(":email", $email);
-        $stmt->bindParam(":pwd", $pwd);
-
-
-        $stmt->execute();
-
-        $pdo = null;
-        $stmt = null;
-
-        header("Location: index.php");
-
-        die("<div class='alert alert-success'>You have regsitered successfully!.</div>");
-    } catch (PDOException $e) {
-        die("Query Failed:" . $e->getMessage());
+    if (empty($error)) {
+        try {
+            $query = "INSERT INTO users (fullname, email, pwd) VALUES (:fullname, :email, :pwd);";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":fullname", $fullname);
+            $stmt->bindParam(":email", $email);
+            $stmt->bindParam(":pwd", $pwd);
+            $stmt->execute();
+            $error .= "Registration successful!";
+        } catch (PDOException $e) {
+            $error .= "Query Failed:" . $e->getMessage() . "<br>";
+        }
     }
-} else {
-    header("Location: index.php");
 }
 
 ?>
