@@ -72,8 +72,6 @@
             } catch (PDOException $e) {
                 die("Query Failed:" . $e->getMessage());
             }
-        } else {
-            header("Location: index.php");
         }
         ?>
         <form action="index.php" method="post">

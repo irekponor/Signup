@@ -1,18 +1,4 @@
 *{
-    padding: 50px;
+    padding: 20px;
 }
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 0px;
-    box-shadow: rgb(70, 70, 62);
-}
-
-.form-group{
-    margin-bottom: 10px;
-}
-
-input{
-    border: 2px solid #000000;
-}
