@@ -41,6 +41,15 @@
                 echo "<div class='alert alert-success'>Registration successful!</div>";
                 $errors = true;
             }
+
+            require_once "database.php";
+            $sql = "SELECT * FROM users WHERE email = '$email'";
+            $result = mysqli_query($sql);
+            $rowCount = mysqli_num_rows($result);
+            if ($rowCount > 0) {
+                echo "<div class='alert alert-danger'>Email already exists.</div>";
+                $errors = true;
+            }
         }
 
 
