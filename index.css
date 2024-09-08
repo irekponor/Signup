@@ -1,0 +1,28 @@
+*{
+    padding: 40px 0 0 0;
+    box-sizing: border-box;
+}
+
+.container {
+    background: white;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    padding: 2vw 10vw;
+    border-radius: 10px;
+}
+
+
+input{
+    border: 1px solid #000000;
+    margin-top: 30px;
+    padding: 10px;
+    outline: none;
+    font-size: 16px;
+    border-radius: 15px;
+}
