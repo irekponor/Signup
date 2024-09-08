@@ -12,74 +12,11 @@
 
 <body>
     <div class="container">
-
-
-        <?php
-
-        if (isset($_POST["submit"])) {
-            $fullname = $_POST["fullname"];
-            $email = $_POST["email"];
-            $pwd = $_POST["pwd"];
-            $pwdRepeat = $_POST["repeat_pwd"];
-
-            $errors = false;
-
-            if (empty($fullname) or empty($email) or empty($pwd) or empty($pwdRepeat)) {
-                echo "<div class='alert alert-danger'>All fields are required!.</div>";
-                $errors = true;
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                echo "<div class='alert alert-danger'>Enter a valid email.</div>";
-                $errors = true;
-            } elseif (strlen($pwd) < 8) {
-                echo "<div class='alert alert-danger'>Password must be at least 8 characters long.</div>";
-                $errors = true;
-            } elseif ($pwd !== $pwdRepeat) {
-                echo "<div class='alert alert-danger'>Passwords don't match!.</div>";
-                $errors = true;
-            } else {
-                echo "<div class='alert alert-success'>You have succcessfully registered!</div>";
-                $errors = false;
-            }
-        }
-
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $fullname = $_POST["fullname"];
-            $email = $_POST["email"];
-            $pwd = $_POST["pwd"];
-            $pwdRepeat = $_POST["repeat_pwd"];
-
-            try {
-                require_once "database.php";
-
-                $query = "INSERT INTO users (fullname, email, pwd) VALUES (:fullname, :email, :pwd);";
-
-                $stmt = $pdo->prepare($query);
-
-                $stmt->bindParam(":fullname", $fullname);
-                $stmt->bindParam(":email", $email);
-                $stmt->bindParam(":pwd", $pwd);
-
-                $stmt->execute();
-
-                $pdo = null;
-                $stmt = null;
-
-
-                die();
-            } catch (PDOException $e) {
-                die("Query Failed:" . $e->getMessage());
-            }
-        }
-
-        ?>
         <form action="index.php" method="post">
 
             <input type="text" name="fullname" placeholder="Full Name">
 
-
             <input type="text" name="email" placeholder="Email">
-
 
             <input type="password" name="pwd" placeholder="Password">
 
