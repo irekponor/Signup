@@ -12,6 +12,37 @@
 
 <body>
     <div class="container">
+        <?php
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $email = $_POST["email"];
+            $pwd = $_POST["pwd"];
+
+            try {
+                require_once "dbh-inc.php";
+
+                $query = "DELETE FROM users WHERE username = :username AND pwd = :pwd;";
+
+                $stmt = $pdo->prepare($query);
+
+                $stmt->bindParam(":username", $username);
+                $stmt->bindParam(":pwd", $pwd);
+
+                $stmt->execute();
+
+                $pdo = null;
+                $stmt = null;
+
+                header("Location: ../index.php");
+
+                die();
+            } catch (PDOException $e) {
+                die("Query Failed:" . $e->getMessage());
+            }
+        } else {
+            header("Location: ../index.php");
+        }
+        ?>
         <form action="delete-user.php" method="post">
 
             <input type="text" name="email" placeholder="Email">
