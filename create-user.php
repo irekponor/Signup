@@ -15,12 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if passwords match
     if ($pwd != $pwdRepeat) {
-        die("Passwords do not match.");
+        die("<div class='alert alert-danger'>Passwords do not match.</div>");
     }
 
     // Check password length
     if (strlen($pwd) < 8) {
-        die("Password must be at least 8 characters long.");
+        die("<div class='alert alert-danger'>Password must be at least 8 characters long</div>");
     }
 
     // Check if email is valid
