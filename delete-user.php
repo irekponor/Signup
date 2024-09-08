@@ -90,6 +90,7 @@
 
             <input type="submit" class="btn btn-primary" value="Register" name="submit">
 
+            <a href="delete-user.php">Delete Account</a>
         </form>
     </div>
 
