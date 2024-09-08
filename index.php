@@ -24,7 +24,6 @@
 
             $errors = false;
 
-
             if (empty($fullname) or empty($email) or empty($pwd) or empty($pwdRepeat)) {
                 echo "<div class='alert alert-danger'>All fields are required!.</div>";
                 $errors = true;
@@ -37,23 +36,9 @@
             } elseif ($pwd !== $pwdRepeat) {
                 echo "<div class='alert alert-danger'>Passwords don't match!.</div>";
                 $errors = true;
-            }
-            try {
-                require_once "database.php";
-
-                $sql = "SELECT * FROM users WHERE email = :email";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':email', $email);
-                $stmt->execute();
-
-                if ($stmt->rowCount() > 0) {
-                    echo "<div class='alert alert-danger'>Email already exists.</div>";
-                    $errors = true;
-                }
-
-                die();
-            } catch (PDOException $e) {
-                die("Query Failed:" . $e->getMessage());
+            } else {
+                echo "<div class='alert alert-success'>You have succcessfully registered!</div>";
+                $errors = false;
             }
         }
 
