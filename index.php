@@ -14,7 +14,7 @@
     <div class="container">
 
 
-        <form action="index.php" method="post">
+        <form action="create-user.php" method="post">
 
             <input type="text" name="fullname" placeholder="Full Name">
 
