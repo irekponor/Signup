@@ -98,6 +98,8 @@ if (isset($_SESSION["user"])) {
 
             <input type="submit" class="btn btn-primary" value="Register" name="submit">
 
+            <p>Already registered? <a href="login-user.php">Login here</a></p>
+
         </form>
         <a href="delete-user.php">Delete Account</a>
     </div>
