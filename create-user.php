@@ -11,21 +11,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Input validation
     if (empty($fullname) || empty($email) || empty($pwd) || empty($pwdRepeat)) {
         die("<div class='alert alert-danger'>All fields are required!.</div>");
+        header("Location: index.php");
     }
 
     // Check if passwords match
     if ($pwd != $pwdRepeat) {
         die("<div class='alert alert-danger'>Passwords do not match.</div>");
+        header("Location: index.php");
     }
 
-    // Check password length
+    // Check password quality
     if (!preg_match("/^[A-Za-z\d]{8,}$/", $pwd)) {
-        die("<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char).</div>");
+        die("<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char, 8 chars min).</div>");
+        header("Location: index.php");
     }
 
     // Check if email is valid
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         die("<div class='alert alert-danger'>Email is not valid.</div>");
+        header("Location: index.php");
     }
 
     // Check if email already exists
@@ -37,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             die("<div class='alert alert-danger'>Email already exists!.</div>");
+            header("Location: index.php");
         }
     } catch (PDOException $e) {
         die("Query Failed:" . $e->getMessage());
