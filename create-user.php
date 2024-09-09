@@ -19,18 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check password length
-    if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $pwd)) {
+    if (!preg_match("/^[a-zA-Z0-9]+$/", $pwd)) {
         die("<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char).</div>");
     }
 
     // Check if email is valid
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         die("<div class='alert alert-danger'>Email is not valid.</div>");
-    }
-
-    // Registration successful
-    if (empty($error)) {
-        die("<div class='alert alert-success'>You have regsitered successfully!.</div>");
     }
 
     // Check if email already exists
@@ -63,7 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         header("Location: index.php");
 
-        die("");
+        if (empty($error)) {
+            die("<div class='alert alert-success'>Registration Successful!</div>");
+        }
     } catch (PDOException $e) {
         die("Query Failed:" . $e->getMessage());
     }
