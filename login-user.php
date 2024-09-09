@@ -20,6 +20,19 @@
             $pwd = $_POST["pwd"];
 
             require_once "database.php";
+            $sql = "SELECT * FROM users WHERE email = :email";
+            $result = mysqli_query($conn, $sql);
+            $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            if ($user) {
+                if (password_verify($pwd, $user["password"])) {
+                    header("Location: Home.php");
+                    die();
+                } else {
+                    echo "<div class='alert alert-danger'>Wrong password</div>";
+                }
+            } else {
+                echo "<div class='alert alert-danger'>Wrong email</div>";
+            }
         }
         ?>
 
@@ -34,6 +47,7 @@
             <input type="submit" class="btn btn-primary" value="Login" name="login">
 
         </form>
+        <a href="index.php">Sign Up</a>
     </div>
 </body>
 
