@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 <?php
-$error = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $_POST["fullname"];
@@ -11,22 +10,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Input validation
     if (empty($fullname) || empty($email) || empty($pwd) || empty($pwdRepeat)) {
-        $error .= "<div class='alert alert-danger'>All fields are required!.</div>";
+        die("<div class='alert alert-danger'>All fields are required!.</div>");
     }
 
     // Check if passwords match
     if ($pwd != $pwdRepeat) {
-        $error .= "<div class='alert alert-danger'>Passwords do not match.</div>";
+        die("<div class='alert alert-danger'>Passwords do not match.</div>");
     }
 
     // Check password length
-    if (strlen($pwd) < 8) {
-        $error .= "<div class='alert alert-danger'>Password must be at least 8 characters long.</div>";
+    if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $pwd)) {
+        die("<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char).</div>");
     }
 
     // Check if email is valid
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error .= "<div class='alert alert-danger'>Email is not valid.</div>";
+        die("<div class='alert alert-danger'>Email is not valid.</div>");
+    }
+
+    // Registration successful
+    if (empty($error)) {
+        die("<div class='alert alert-success'>You have regsitered successfully!.</div>");
     }
 
     // Check if email already exists
@@ -37,30 +41,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(":email", $email);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            $error .= "<div class='alert alert-danger'>Email already exists!.</div>";
+            die("<div class='alert alert-danger'>Email already exists!.</div>");
         }
     } catch (PDOException $e) {
-        $error .= "Query Failed:" . $e->getMessage() . "<br>";
+        die("Query Failed:" . $e->getMessage());
     }
 
     // Insert new user into database
-    if (empty($error)) {
-        try {
-            $query = "INSERT INTO users (fullname, email, pwd) VALUES (:fullname, :email, :pwd);";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":fullname", $fullname);
-            $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":pwd", $pwd);
+    try {
+        $query = "INSERT INTO users (fullname, email, pwd) VALUES (:fullname, :email, :pwd);";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":fullname", $fullname);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":pwd", $pwd);
 
 
-            $stmt->execute();
+        $stmt->execute();
 
-            header("Location: index.php");
+        $pdo = null;
+        $stmt = null;
 
-            $error .= "<div class='alert alert-success'>You have regsitered successfully!.</div>";
-        } catch (PDOException $e) {
-            $error .= "Query Failed:" . $e->getMessage() . "<br>";
-        }
+        header("Location: index.php");
+
+        die("");
+    } catch (PDOException $e) {
+        die("Query Failed:" . $e->getMessage());
     }
 } else {
     header("Location: index.php");
