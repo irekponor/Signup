@@ -15,7 +15,6 @@
     <div class="container">
 
         <?php
-        session_start();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST["email"];
@@ -23,8 +22,8 @@
 
             require_once "database.php";
 
-            $sql = "SELECT * FROM users WHERE email = :email";
-            $stmt = $pdo->prepare($sql);
+            $query = "SELECT * FROM users WHERE email = :email";
+            $stmt = $pdo->prepare($query);
             $stmt->bindParam(":email", $email);
             $stmt->execute();
 
@@ -32,9 +31,8 @@
 
             if ($user) {
                 if (password_verify($pwd, $user["pwd"])) {
-                    $_SESSION["user"] = $user;
                     header("location: home.php");
-                    exit();
+                    die();
                 } else {
                     echo "<div class='alert alert-danger'>Wrong password</div>";
                 }
