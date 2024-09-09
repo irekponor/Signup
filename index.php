@@ -12,9 +12,8 @@
 
 <body>
     <div class="container">
+
         <?php
-        $error = '';
-        $success = '';
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fullname = $_POST["fullname"];
@@ -22,20 +21,25 @@
             $pwd = $_POST["pwd"];
             $pwdRepeat = $_POST["repeat_pwd"];
 
-            // If there's an error, store it in the $error variable
+            // Input validation
             if (empty($fullname) || empty($email) || empty($pwd) || empty($pwdRepeat)) {
-                $error = "<div class='alert alert-danger'>All fields are required!</div>";
-            } elseif ($pwd != $pwdRepeat) {
-                $error = "<div class='alert alert-danger'>Passwords do not match.</div>";
-            } elseif (!preg_match("/^[A-Za-z\d]{8,}$/", $pwd)) {
-                $error = "<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char, 8 chars min).</div>";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $error = "<div class='alert alert-danger'>Email is not valid.</div>";
-            } elseif ($stmt->rowCount() > 0) {
-                $error = "<div class='alert alert-danger'>Email already exists!</div>";
-            } else {
-                // If data is inserted successfully, store a success message
-                $success = "<div class='alert alert-success'>Registration successful!</div>";
+                $message = "<div class='alert alert-danger'>All fields are required!.</div>";
+                die($message);
+            }
+
+            // Check if passwords match
+            if ($pwd != $pwdRepeat) {
+                die("<div class='alert alert-danger'>Passwords do not match.</div>");
+            }
+
+            // Check password quality
+            if (!preg_match("/^[A-Za-z\d]{8,}$/", $pwd)) {
+                die("<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char, 8 chars min).</div>");
+            }
+
+            // Check if email is valid
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                die("<div class='alert alert-danger'>Email is not valid.</div>");
             }
 
             // Check if email already exists
@@ -46,7 +50,7 @@
                 $stmt->bindParam(":email", $email);
                 $stmt->execute();
                 if ($stmt->rowCount() > 0) {
-                    $error = "<div class='alert alert-danger'>Email already exists!.</div>";
+                    die("<div class='alert alert-danger'>Email already exists!.</div>");
                 }
             } catch (PDOException $e) {
                 die("Query Failed:" . $e->getMessage());
@@ -67,24 +71,33 @@
                 $stmt = null;
 
 
+
                 die("");
             } catch (PDOException $e) {
                 die("Query Failed:" . $e->getMessage());
             }
         }
+
         ?>
 
-        <!-- Display error or success message -->
-        <?php echo $error; ?>
-        <?php echo $success; ?>
-
         <form action="index.php" method="post">
+
+            <?php echo $message; ?>
+
             <input type="text" name="fullname" placeholder="Full Name">
+
             <input type="text" name="email" placeholder="Email">
+
             <input type="password" name="pwd" placeholder="Password">
+
+
             <input type="password" name="repeat_pwd" placeholder="Repeat Password">
+
+
             <input type="submit" class="btn btn-primary" value="Register" name="submit">
+
             <a href="delete-user.php">Delete Account</a>
+
         </form>
     </div>
 
