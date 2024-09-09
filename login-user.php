@@ -15,22 +15,29 @@
     <div class="container">
 
         <?php
-        if (isset($_POST["login"])) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST["email"];
             $pwd = $_POST["pwd"];
+
             require_once "database.php";
-            $sql = "SELECT * FROM users WHERE email = '$email'";
-            $result = mysqli_query($conn, $sql);
-            $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+            $sql = "SELECT * FROM users WHERE email = :email";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(":email", $email);
+            $stmt->execute();
+
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
             if ($user) {
                 if (password_verify($pwd, $user["pwd"])) {
+                    $_SESSION["user"] = $user;
                     header("Location: home.php");
-                    die();
+                    exit();
                 } else {
                     echo "<div class='alert alert-danger'>Wrong password</div>";
                 }
             } else {
-                echo "<div class='alert alert-danger'>Wrong email</div>";
+                echo "<div class='alert alert-danger'>Wrong email.</div>";
             }
         }
         ?>
