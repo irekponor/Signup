@@ -15,6 +15,8 @@
     <div class="container">
 
         <?php
+        session_start();
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST["email"];
             $pwd = $_POST["pwd"];
