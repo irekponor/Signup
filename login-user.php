@@ -33,7 +33,7 @@
             if ($user) {
                 if (password_verify($pwd, $user["pwd"])) {
                     $_SESSION["user"] = $user;
-                    header("Location: home.php");
+                    header("location: home.php");
                     exit();
                 } else {
                     echo "<div class='alert alert-danger'>Wrong password</div>";
