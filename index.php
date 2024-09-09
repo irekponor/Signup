@@ -75,7 +75,6 @@
         }
         ?>
 
-        <!-- HTML form to register -->
         <form method="post">
             <input type="text" name="fullname" placeholder="Full Name">
 
@@ -85,7 +84,7 @@
 
             <input type="password" name="repeat_pwd" placeholder="Repeat Password">
 
-            <button type="submit">Register</button>
+            <button type="submit" class="btn btn-primary">Register</button>
         </form>
         <a href="delete-user.php">Delete Account</a>
     </div>
