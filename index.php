@@ -14,6 +14,7 @@
     <div class="container">
 
         <?php
+        $message = '';
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fullname = $_POST["fullname"];
@@ -80,9 +81,9 @@
 
         ?>
 
-        <form action="index.php" method="post">
+        <?php echo "$message"; ?>
 
-            <?php echo $message; ?>
+        <form action="index.php" method="post">
 
             <input type="text" name="fullname" placeholder="Full Name">
 
