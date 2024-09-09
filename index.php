@@ -24,8 +24,7 @@
 
             // Input validation
             if (empty($fullname) || empty($email) || empty($pwd) || empty($pwdRepeat)) {
-                $message = "<div class='alert alert-danger'>All fields are required!.</div>";
-                die($message);
+                die("<div class='alert alert-danger'>All fields are required!.</div>");
             }
 
             // Check if passwords match
@@ -80,8 +79,6 @@
         }
 
         ?>
-
-        <?php echo $message; ?>
 
         <form action="index.php" method="post">
 
