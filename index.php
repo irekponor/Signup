@@ -14,8 +14,6 @@
     <div class="container">
 
         <?php
-        $error = '';
-
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fullname = $_POST["fullname"];
             $email = $_POST["email"];
@@ -24,22 +22,22 @@
 
             // Input validation
             if (empty($fullname) || empty($email) || empty($pwd) || empty($pwdRepeat)) {
-                $error .= "<div class='alert alert-danger'>Fill in all the fields.</div>";
+                die("<div class='alert alert-danger'>All fields are required!.</div>");
             }
 
             // Check if passwords match
-            elseif ($pwd != $pwdRepeat) {
-                $error .= "<div class='alert alert-danger'>Passwords do not match.</div>";
+            if ($pwd != $pwdRepeat) {
+                die("<div class='alert alert-danger'>Passwords do not match.</div>");
             }
 
             // Check password quality
-            elseif (!preg_match("/^[A-Za-z\d]{8,}$/", $pwd)) {
-                $error .= "<div class='alert alert-danger'>Use a stronger password(at least 1 upper and lowercase, 1 no., 1 special char, min of 8 char.</div>";
+            if (!preg_match("/^[A-Za-z\d]{8,}$/", $pwd)) {
+                die("<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char, 8 chars min).</div>");
             }
 
             // Check if email is valid
-            elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $error .= "<div class='alert alert-danger'>Email is invalid</div>";
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                die("<div class='alert alert-danger'>Email is not valid.</div>");
             }
 
             // Check if email already exists
@@ -50,41 +48,47 @@
                 $stmt->bindParam(":email", $email);
                 $stmt->execute();
                 if ($stmt->rowCount() > 0) {
-                    $error .= "<div class='alert alert-danger'>Email already exists.</div>";
+                    die("<div class='alert alert-danger'>Email already exists!.</div>");
                 }
             } catch (PDOException $e) {
-                $error .= "Query Failed:" . $e->getMessage() . "<br>";
+                die("Query Failed:" . $e->getMessage());
             }
-
             // Insert new user into database
-            if (empty($error)) {
-                try {
-                    $query = "INSERT INTO users (fullname, email, pwd) VALUES (:fullname, :email, :pwd);";
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":fullname", $fullname);
-                    $stmt->bindParam(":email", $email);
-                    $stmt->bindParam(":pwd", $pwd);
+            try {
+                $query = "INSERT INTO users (fullname, email, pwd) VALUES (:fullname, :email, :pwd);";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":fullname", $fullname);
+                $stmt->bindParam(":email", $email);
+                $stmt->bindParam(":pwd", $pwd);
 
-                    $stmt->execute();
 
-                    $error .= "<div class='alert alert-success'>Registration successful!.</div>";
-                } catch (PDOException $e) {
-                    $error .= "Query Failed:" . $e->getMessage() . "<br>";
-                }
+                $stmt->execute();
+
+                $pdo = null;
+                $stmt = null;
+
+                die("<div class='alert alert-success'>You have registered successfully.</div>");
+            } catch (PDOException $e) {
+                die("Query Failed:" . $e->getMessage());
             }
         }
+
         ?>
 
-        <form method="post">
+        <form action="index.php" method="post">
+
             <input type="text" name="fullname" placeholder="Full Name">
 
-            <input type="email" name="email" placeholder="Email">
+            <input type="text" name="email" placeholder="Email">
 
             <input type="password" name="pwd" placeholder="Password">
 
+
             <input type="password" name="repeat_pwd" placeholder="Repeat Password">
 
-            <button type="submit" class="btn btn-primary">Register</button>
+
+            <input type="submit" class="btn btn-primary" value="Register" name="submit">
+
         </form>
         <a href="delete-user.php">Delete Account</a>
     </div>

@@ -36,7 +36,7 @@
                 $errors = true;
             } else {
                 echo "<div class='alert alert-success'>Account deleted succesfully!</div>";
-                echo "<a href='index.php'>Back to login</a>";
+                echo "<a href='index.php'>Home</a>";
                 $errors = true;
             }
         }
