@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check password length
-    if (!preg_match("/^[a-zA-Z0-9]+$/", $pwd)) {
+    if (!preg_match("/^[A-Za-z\d]{8,}$/", $pwd)) {
         die("<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char).</div>");
     }
 
@@ -58,9 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         header("Location: index.php");
 
-        if (empty($error)) {
-            die("<div class='alert alert-success'>Registration Successful!</div>");
-        }
+        die("");
     } catch (PDOException $e) {
         die("Query Failed:" . $e->getMessage());
     }
