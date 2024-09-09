@@ -81,7 +81,7 @@
 
         ?>
 
-        <?php echo "$message"; ?>
+        <?php echo $message; ?>
 
         <form action="index.php" method="post">
 
