@@ -27,3 +27,10 @@ input{
     border-radius: 15px;
 }
 
+i{
+    font-size: 60px;
+    padding-left: 13rem;
+    margin: 0 0 0 20px;
+    color: #000000;
+}
+
