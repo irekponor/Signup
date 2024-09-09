@@ -31,6 +31,8 @@
 
             if ($user) {
                 if (password_verify($pwd, $user["pwd"])) {
+                    session_start();
+                    $_SESSION["user"] = "yes";
                     header("location: home.php");
                     exit();
                 } else {
