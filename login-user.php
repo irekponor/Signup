@@ -32,7 +32,7 @@
             if ($user) {
                 if (password_verify($pwd, $user["pwd"])) {
                     header("location: home.php");
-                    die();
+                    exit();
                 } else {
                     echo "<div class='alert alert-danger'>Wrong password</div>";
                 }

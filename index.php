@@ -36,6 +36,12 @@
                 die("<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char, 8 chars min).</div>");
             }
 
+            // check password hashing
+            if (!empty($pwd) && preg_match("/^[A-Za-z\d]{8,}$/", $pwd)) {
+                $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+                die();
+            }
+
             // Check if email is valid
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 die("<div class='alert alert-danger'>Email is not valid.</div>");
