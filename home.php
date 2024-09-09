@@ -21,7 +21,7 @@ if (!isset($_SESSION["user"])) {
 <body>
     <div class="dashboard">
         Welcome to the dashboard guyy
-
+        <a href="login-user.php" class="btn btn-warning">Log Out</a>
     </div>
 </body>
 
