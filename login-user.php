@@ -12,7 +12,29 @@
 </head>
 
 <body>
+    <div class="container">
 
+        <?php
+        if (isset($_POST["login"])) {
+            $email = $_POST["email"];
+            $pwd = $_POST["pwd"];
+
+            require_once "database.php";
+        }
+        ?>
+
+        <form action="login-user.php" method="post">
+
+            <i class="fa-solid fa-user"></i>
+
+            <input type="text" name="email" placeholder="Email">
+
+            <input type="password" name="pwd" placeholder="Password">
+
+            <input type="submit" class="btn btn-primary" value="Login" name="login">
+
+        </form>
+    </div>
 </body>
 
 </html>
