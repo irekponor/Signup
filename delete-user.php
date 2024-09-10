@@ -15,7 +15,32 @@
         <form action="delete-user.php" method="post">
 
             <?php
-
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $email = $_POST["email"];
+                $pwd = $_POST["pwd"];
+                require_once "database.php";
+                $query = "SELECT * FROM users WHERE email = :email";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":email", $email);
+                $stmt->execute();
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($user) {
+                    if (password_verify($pwd, $user["pwd"])) {
+                        $query = "DELETE FROM users WHERE email = :email";
+                        $stmt = $pdo->prepare($query);
+                        $stmt->bindParam(":email", $email);
+                        if ($stmt->execute()) {
+                            die("<div class='alert alert-success'>User deleted successfully.</div>");
+                        } else {
+                            die("<div class='alert alert-danger'>Failed to delete user.</div>");
+                        }
+                    } else {
+                        die("<div class='alert alert-danger'>Password is incorrect</div>");
+                    }
+                } else {
+                    die("<div class='alert alert-danger'>Wrong email.</div>");
+                }
+            }
             ?>
 
             <input type="text" name="email" placeholder="Email">

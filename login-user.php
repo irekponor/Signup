@@ -43,7 +43,7 @@ if (isset($_SESSION["user"])) {
                     header("location: home.php");
                     exit();
                 } else {
-                    echo "<div class='alert alert-danger'>Wrong password</div>";
+                    echo "<div class='alert alert-danger'>Password is incorrect</div>";
                 }
             } else {
                 echo "<div class='alert alert-danger'>Wrong email.</div>";
