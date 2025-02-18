@@ -41,7 +41,7 @@ if (isset($_SESSION["user"])) {
 
                 // Check password quality
                 if (!preg_match("/^[A-Za-z\d]{8,}$/", $pwd)) {
-                    die("<div class='alert alert-danger'>Use a strong password (1 uppercase, lowercase, 1 no, 1 special char, 8 chars min).</div>");
+                    die("<div class='alert alert-danger'>Use a strong password (1 uppercase & lowercase, 1 no, 8 chars min).</div>");
                 }
 
                 $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
@@ -75,10 +75,13 @@ if (isset($_SESSION["user"])) {
 
                     $stmt->execute();
 
+                    // closing connection
                     $pdo = null;
                     $stmt = null;
 
-                    die("<div class='alert alert-success'>You have registered successfully.</div>");
+                    // redirect to home
+                    header("Location: home.php");
+                    exit();
                 } catch (PDOException $e) {
                     die("Query Failed:" . $e->getMessage());
                 }
